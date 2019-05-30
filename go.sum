@@ -1,4 +1,2 @@
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/zhuCheer/cfg v0.0.0-20190225065622-7e1e8127e595 h1:cW3THbU/3a/oPi1PYOOqS/uX1WWRo+HFwB4KKWCLeAo=
-github.com/zhuCheer/cfg v0.0.0-20190225065622-7e1e8127e595/go.mod h1:cG2ODTVWz4mNB3Dzlnpqr6E4BZubV2rFnk7+Tt3MTZY=
