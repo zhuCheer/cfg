@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// 配置对象
 type cfgHandler struct{
 	confInfo interface{}
 }
