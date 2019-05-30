@@ -37,6 +37,7 @@ func GetString(key string) string{
 	return showRet
 }
 
+// 获取数字类型
 func  GetInt(key string) int{
 	ret := ParseNode(key)
 	showRet,ok:=ret.(int64)
