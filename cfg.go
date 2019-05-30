@@ -27,6 +27,7 @@ func InitConfFile(filePath string){
 	}
 }
 
+// 获取字符串配置
 func GetString(key string) string{
 	ret := ParseNode(key)
 	showRet,ok:=ret.(string)
