@@ -10,8 +10,8 @@ github.com/zhuCheer/cfg
 使用
 
 ```
-cfg.InitConfFile("./config.toml") //设置配置文件地址
-value:=cfg.GetInt("database.connection_max") //读取toml配置节点
+cfgHandler, _ := cfg.New("./config.toml") //设置配置文件地址
+value := cfgHandler.GetInt("database.connection_max") //读取toml配置节点
 
 
 
