@@ -11,6 +11,7 @@ server = "192.168.1.1"
 ports = [ 8001, 8001, 8002 ]
 connection_max = 5000
 enabled = true
+timeout = 30
 
 [servers]
 
@@ -21,7 +22,7 @@ enabled = true
 
   [servers.beta]
   ip = "10.0.0.2"
-  dc = "eqdc10"
+  dc = ["eqdc10","eqdc11","eqdc12"]
 
 [clients]
 data = [ ["gamma", "delta"], [1, 2] ]

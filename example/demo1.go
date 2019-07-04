@@ -5,12 +5,12 @@ import (
 	"github.com/zhuCheer/cfg"
 )
 
-func main () {
+func main() {
 
 	fmt.Println("cfg start")
 
-	cfg.InitConfFile("./config.toml")
-	value:=cfg.GetInt("database.connection_max")
+	cfgHandler, _ := cfg.New("./config.toml")
+	value := cfgHandler.GetInt("database.connection_max")
 
 	fmt.Println(value)
 
