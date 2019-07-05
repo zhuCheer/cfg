@@ -2,6 +2,8 @@ package cfg
 
 import (
 	"github.com/BurntSushi/toml"
+	"github.com/fsnotify/fsnotify"
+	"log"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -19,12 +21,14 @@ func New(filePath string) (*cfgHandler, error) {
 	if err != nil {
 		panic(err)
 	}
+
 	handler := cfgHandler{}
 	if _, err := toml.DecodeFile(filePath, &handler.confInfo); err != nil {
 		if err != nil {
 			return nil, err
 		}
 	}
+	go watchChange(filePath, &handler)
 	return &handler, nil
 }
 
@@ -163,4 +167,31 @@ func readNode(key string, node interface{}) (ret interface{}) {
 	}
 
 	return node
+}
+
+func watchChange(path string, handler *cfgHandler) {
+	watcher, err := fsnotify.NewWatcher()
+	defer watcher.Close()
+	if err != nil {
+		panic(err)
+	}
+
+	done := make(chan bool)
+	go func() {
+		for {
+			select {
+			case event := <-watcher.Events:
+				log.Printf("reload config " + path)
+				if event.Op&fsnotify.Write == fsnotify.Write {
+					var confInfo interface{}
+					toml.DecodeFile(path, &confInfo)
+					handler.confInfo = confInfo
+				}
+			}
+		}
+	}()
+
+	watcher.Add(path)
+	<-done
+
 }
