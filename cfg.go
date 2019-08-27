@@ -16,7 +16,11 @@ type cfgHandler struct {
 }
 
 // New get a cfg handler
-func New(filePath string) (*cfgHandler, error) {
+func New(filePath string) (*cfgHandler) {
+	if filePath == ""{
+		return nil
+	}
+
 	filePath, err := filepath.Abs(filePath)
 	if err != nil {
 		panic(err)
@@ -25,11 +29,11 @@ func New(filePath string) (*cfgHandler, error) {
 	handler := cfgHandler{}
 	if _, err := toml.DecodeFile(filePath, &handler.confInfo); err != nil {
 		if err != nil {
-			return nil, err
+			panic(err)
 		}
 	}
 	go watchChange(filePath, &handler)
-	return &handler, nil
+	return &handler
 }
 
 // GetString get config string type
