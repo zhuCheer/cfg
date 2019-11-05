@@ -16,8 +16,8 @@ type cfgHandler struct {
 }
 
 // New get a cfg handler
-func New(filePath string) (*cfgHandler) {
-	if filePath == ""{
+func New(filePath string) *cfgHandler {
+	if filePath == "" {
 		return nil
 	}
 
@@ -148,6 +148,20 @@ func (c *cfgHandler) ParseNode(parse string) (ret interface{}) {
 	return
 }
 
+// Exists find config node exists
+func (c *cfgHandler) Exists(parse string) bool {
+	nodeParse := strings.Split(parse, ".")
+	var ret interface{}
+	var exists bool
+
+	ret = c.confInfo
+	for _, item := range nodeParse {
+		exists, ret = readExistsNode(item, ret)
+	}
+
+	return exists
+}
+
 // getSlice get config slice []interface{} type
 func (c *cfgHandler) getSlice(key string) []interface{} {
 
@@ -171,6 +185,23 @@ func readNode(key string, node interface{}) (ret interface{}) {
 	}
 
 	return node
+}
+
+// readExistsNode ...
+func readExistsNode(key string, node interface{}) (exists bool, ret interface{}) {
+	if node == nil {
+		return
+	}
+	nodeType := reflect.TypeOf(node).String()
+	if nodeType == "map[string]interface {}" {
+		nodeInfo := node.(map[string]interface{})
+		if _, ok := nodeInfo[key]; ok {
+			return true, nodeInfo[key]
+		}
+		return false, nodeInfo[key]
+	}
+
+	return true, node
 }
 
 func watchChange(path string, handler *cfgHandler) {
